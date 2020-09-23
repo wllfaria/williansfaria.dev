@@ -27,7 +27,7 @@ module.exports = {
 		'space-before-function-paren': 'off',
 		'react/prop-types': 'off',
 		'no-tabs': 'off',
-		indent: ['error', 'tab'],
+		indent: ['error', 'tab', { "SwitchCase": 1 }],
 		'no-new': 'off',
 		'@typescript-eslint/no-unused-vars': [
 			'error',
@@ -37,7 +37,7 @@ module.exports = {
 		],
 		'@typescript-eslint/no-empty-interface': 'off',
 		'no-useless-constructor': 'off',
-		'import/prefer-default-export': 'off'
+		'import/prefer-default-export': 'off',
 	},
 	settings: {
 		'import/resolver': {

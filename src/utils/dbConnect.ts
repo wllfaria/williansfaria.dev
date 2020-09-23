@@ -8,6 +8,7 @@ async function dbConnect(): Promise<void> {
 	}
 
 	const db = await mongoose.connect(process.env.MONGODB_URI, {
+		dbName: process.env.MONGODB_NAME,
 		useNewUrlParser: true,
 		useUnifiedTopology: true,
 		useFindAndModify: false
