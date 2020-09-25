@@ -9,7 +9,7 @@ export const SArticleCard = styled.div`
 export const SArticleReadTime = styled.p`
 	a {
 		font-size: ${props => props.theme.fontSizes[6]};
-		color: ${props => props.theme.colors.text[400]};
+		color: ${props => props.theme.colors.text[300]};
 		text-decoration: none;
 
 		@media (min-width: ${props => props.theme.breakpoints.md}) {
@@ -36,7 +36,7 @@ export const SArticleDesc = styled.p`
 	a {
 		text-decoration: none;
 		font-size: 1.6rem;
-		color: ${props => props.theme.colors.text[400]};
+		color: ${props => props.theme.colors.text[200]};
 		margin-bottom: ${props => props.theme.margins[1]};
 
 		@media (min-width: ${props => props.theme.breakpoints.md}) {
@@ -45,7 +45,10 @@ export const SArticleDesc = styled.p`
 	}
 `
 
-export const SArticleTag = styled.span`
+export const SArticleTag = styled.div`
+	display: flex;
+	justify-content: space-between;
+
 	a {
 		font-size: ${props => props.theme.fontSizes[7]};
 		color: ${props => props.theme.colors.primary[500]};

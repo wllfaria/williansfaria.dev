@@ -9,6 +9,28 @@ export default createGlobalStyle`
 		box-sizing: border-box;
 	}
 
+	/* width */
+	::-webkit-scrollbar {
+		width: 0.7rem;
+		height: 0.7rem;
+
+		&-thumb {
+			background: ${props => props.theme.colors.primary[500]};
+
+			&:hover {
+				background: ${props => props.theme.colors.primary[700]};
+			}
+
+			&:active {
+				background: ${props => props.theme.colors.primary[300]};
+			}
+		}
+
+		&-track {
+			background: ${props => props.theme.colors.background.accent};
+		}
+	}
+
 	html {
 		font-size: 10px;
 	}

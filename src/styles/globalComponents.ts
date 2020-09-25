@@ -1,12 +1,13 @@
 import styled, { css } from 'styled-components'
-import { motion } from 'framer-motion'
 
 export const Main = styled.main`
 	width: 100%;
+	padding-bottom: ${props => props.theme.paddings[8]};
 
 	@media (min-width: ${props => props.theme.breakpoints.sm}) {
 		height: 100vh;
 		overflow-y: scroll;
+		padding-bottom: ${props => props.theme.paddings[3]};
 	}
 
 	@media (min-width: ${props => props.theme.breakpoints.sm}) {
@@ -34,7 +35,6 @@ export const MainSection = styled.section`
 
 export const FinishSection = styled.section`
 	padding-top: ${props => props.theme.paddings[1]};
-	padding-bottom: ${props => props.theme.paddings[8]};
 	${sectionWidth};
 `
 
@@ -65,5 +65,166 @@ export const MutedParagraph = styled.p`
 `
 
 export const PurpleText = styled.span`
-	color: ${props => props.theme.colors.primary[500]};
+	color: ${props => props.theme.colors.primary[700]};
+
+	a {
+		color: ${props => props.theme.colors.primary[700]} !important;
+	}
+`
+
+export const SArticleCover = styled.img`
+	width: 100%;
+	max-height: 150px;
+	object-fit: cover;
+
+	@media (min-width: ${props => props.theme.breakpoints.sm}) {
+		max-height: 200px;
+	}
+
+	@media (min-width: ${props => props.theme.breakpoints.md}) {
+		max-height: 300px;
+	}
+
+	@media (min-width: ${props => props.theme.breakpoints.xl}) {
+		max-height: 400px;
+	}
+`
+
+export const SArticle = styled.div`
+	font-family: 'Merriweather';
+
+	& h1,
+	& h2,
+	& h3 {
+		font-family: 'Bold';
+	}
+
+	& h1 {
+		font-size: ${props => props.theme.fontSizes[4]};
+		margin-bottom: 2rem;
+
+		@media (min-width: ${props => props.theme.breakpoints.lg}) {
+			font-size: ${props => props.theme.fontSizes[3]};
+		}
+	}
+
+	& h2 {
+		font-size: ${props => props.theme.fontSizes[5]};
+		margin-bottom: 1.5rem;
+
+		@media (min-width: ${props => props.theme.breakpoints.lg}) {
+			font-size: ${props => props.theme.fontSizes[4]};
+		}
+	}
+
+	& h3,
+	& h4,
+	& h5,
+	& h6 {
+		font-size: 1.6rem;
+		color: ${props => props.theme.colors.text[300]};
+		margin-bottom: 1rem;
+
+		@media (min-width: ${props => props.theme.breakpoints.lg}) {
+			font-size: ${props => props.theme.fontSizes[5]};
+		}
+	}
+
+	& img {
+		width: 100%;
+		margin-bottom: 2rem;
+	}
+
+	& blockquote {
+		padding-left: 1rem;
+		padding-top: 1rem;
+		padding-bottom: 1rem;
+		border-left: 3px solid ${props => props.theme.colors.text[100]};
+		font-size: ${props => props.theme.fontSizes[5]};
+		color: ${props => props.theme.colors.text[300]};
+		margin-bottom: 2rem;
+		font-family: 'Regular';
+
+		@media (min-width: ${props => props.theme.breakpoints.lg}) {
+			font-size: ${props => props.theme.fontSizes[4]};
+		}
+
+		& p {
+			margin-bottom: 0;
+		}
+	}
+
+	& p {
+		font-size: 1.6rem;
+		line-height: 1.655556;
+		margin-bottom: 1rem;
+
+		@media (min-width: ${props => props.theme.breakpoints.lg}) {
+			font-size: ${props => props.theme.fontSizes[5]};
+		}
+	}
+
+	& ol,
+	& ul {
+		ol {
+			color: ${props => props.theme.colors.text[300]};
+		}
+		padding-left: 1.6rem;
+		margin-bottom: 1rem;
+
+		li {
+			font-size: 1.6rem;
+			margin-bottom: 0.5rem;
+
+			@media (min-width: ${props => props.theme.breakpoints.lg}) {
+				font-size: ${props => props.theme.fontSizes[5]};
+			}
+		}
+	}
+
+	& table {
+		width: 100%;
+		margin-bottom: 2rem;
+		border-collapse: collapse;
+
+		& thead {
+			text-align: left;
+			font-family: 'Bold';
+			font-size: ${props => props.theme.fontSizes[5]};
+
+			@media (min-width: ${props => props.theme.breakpoints.lg}) {
+				font-size: ${props => props.theme.fontSizes[4]};
+			}
+		}
+
+		& tbody {
+			font-size: 1.6rem;
+
+			@media (min-width: ${props => props.theme.breakpoints.lg}) {
+				font-size: ${props => props.theme.fontSizes[5]};
+			}
+		}
+
+		& td,
+		& th {
+			border: 1px solid ${props => props.theme.colors.text[500]};
+			padding: 0.5rem;
+		}
+
+		& tr:nth-of-type(even) {
+			background: ${props => props.theme.colors.background.accent};
+		}
+	}
+
+	& hr {
+		border-top: 2px solid ${props => props.theme.colors.text[500]};
+		border-right: none;
+		border-left: none;
+		border-bottom: none;
+	}
+
+	& a {
+		text-decoration: none;
+		color: ${props => props.theme.colors.primary[500]};
+	}
 `

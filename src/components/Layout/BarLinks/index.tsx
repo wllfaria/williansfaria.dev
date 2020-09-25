@@ -44,7 +44,7 @@ const BarLinks: React.FC = () => {
 					</SBarLinkLabel>
 				</>
 			)}
-			{router.pathname === '/blog' ? (
+			{router.pathname.includes('/blog') ? (
 				<>
 					<Link href="/blog">
 						<SArticleFillIcon />
@@ -65,7 +65,7 @@ const BarLinks: React.FC = () => {
 					</SBarLinkLabel>
 				</>
 			)}
-			{router.pathname === '/book-notes' ? (
+			{router.pathname.includes('/book-notes') ? (
 				<>
 					<Link href="/book-notes">
 						<SBookFillIcon />

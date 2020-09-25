@@ -3,39 +3,39 @@ import { useRouter } from 'next/router'
 import React, { useContext, useEffect, useState } from 'react'
 import ReactMarkdown from 'react-markdown'
 import Transition from '../../components/Transition'
-import { useFetchArticles } from '../../hooks'
+import { useFetchBookNotes } from '../../hooks'
 import { ContentContext } from '../../states/contentState'
 import { TArticle } from '../../utils'
 import { Main, MainSection, SArticleCover, SArticle } from '../../styles'
 import CodeBlock from '../../components/CodeBlock'
 
-interface IArticleProps {
-	articles: TArticle[]
+interface IBookNoteProps {
+	bookNotes: TArticle[]
 }
 
-const Article: React.FC<IArticleProps> = ({ articles: fetchedArticles }) => {
+const BookNote: React.FC<IBookNoteProps> = ({ bookNotes: fetchedBookNotes }) => {
 	const { asPath } = useRouter()
-	const [article, setArticle] = useState<TArticle>(null)
-	const { articles, setArticles } = useContext(ContentContext)
+	const [shownBookNote, setBookNote] = useState<TArticle>(null)
+	const { bookNotes, setBookNotes } = useContext(ContentContext)
 
 	useEffect(() => {
-		!articles && setArticles(fetchedArticles)
+		!bookNotes && setBookNotes(fetchedBookNotes)
 	}, [])
 
 	useEffect(() => {
-		const article = articles?.filter(article => asPath.includes(article.data.slug))[0]
-		article && setArticle(article)
-	}, [articles])
+		const bookNote = bookNotes?.filter(article => asPath.includes(article.data.slug))[0]
+		bookNote && setBookNote(bookNote)
+	}, [bookNotes])
 
 	return (
 		<Transition>
 			<Main>
-				<SArticleCover src={article && `/static/assets/images/content/${article.data.coverImg}`} />
+				<SArticleCover src={shownBookNote && `/static/assets/images/content/${shownBookNote.data.coverImg}`} />
 				<MainSection>
 					<SArticle>
 						<ReactMarkdown
 							escapeHtml={true}
-							source={article?.content}
+							source={shownBookNote?.content}
 							renderers={{
 								code: CodeBlock
 							}}
@@ -48,10 +48,10 @@ const Article: React.FC<IArticleProps> = ({ articles: fetchedArticles }) => {
 }
 
 export async function getStaticPaths(): Promise<{ paths: { params: { slug: string } }[]; fallback: boolean }> {
-	const articles = useFetchArticles()
+	const bookNotes = useFetchBookNotes()
 
-	const paths = articles.map(article => ({
-		params: { slug: article.data.slug }
+	const paths = bookNotes.map(bookNote => ({
+		params: { slug: bookNote.data.slug }
 	}))
 
 	return {
@@ -60,13 +60,13 @@ export async function getStaticPaths(): Promise<{ paths: { params: { slug: strin
 	}
 }
 
-export async function getStaticProps(): Promise<{ props: { articles: TArticle[] } }> {
-	const articles = useFetchArticles()
+export async function getStaticProps(): Promise<{ props: { bookNotes: TArticle[] } }> {
+	const bookNotes = useFetchBookNotes()
 	return {
 		props: {
-			articles
+			bookNotes
 		}
 	}
 }
 
-export default Article
+export default BookNote

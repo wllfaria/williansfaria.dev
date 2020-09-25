@@ -75,10 +75,24 @@ export const SHomeHeartIcon = styled(HomeHeart)`
 
 export const SLightBulbOffIcon = styled(LightBulbOff)`
 	${lineIconStyles};
+
+	@media (min-width: ${props => props.theme.breakpoints.lg}) {
+		display: block;
+		margin-bottom: 0;
+		width: 3rem;
+		margin-left: ${props => props.theme.margins[1]};
+	}
 `
 
 export const SLightBulbOnIcon = styled(LightBulbOn)`
 	${fillIconStyles};
+
+	@media (min-width: ${props => props.theme.breakpoints.lg}) {
+		display: block;
+		margin-bottom: 0;
+		width: 3rem;
+		margin-left: ${props => props.theme.margins[1]};
+	}
 `
 
 export const SBookLineIcon = styled(BookLine)`

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext, useEffect } from 'react'
 import Head from 'next/head'
 import { motion } from 'framer-motion'
 import { MutedParagraph, Paragraph, PurpleText, SmallTitle, Title, Main, MainSection, FinishSection } from '../styles'
@@ -6,17 +6,33 @@ import { useFetchArticles } from '../hooks/useFetchArticles'
 import { TArticle } from '../utils'
 import ArticleList from '../components/ArticleList'
 import Transition from '../components/Transition'
+import { useFetchBookNotes } from '../hooks/useFetchBookNotes'
+import { ContentContext } from '../states/contentState'
+import Meta from '../components/Meta'
 
 interface IHomeProps {
 	articles: TArticle[]
+	bookNotes: TArticle[]
 }
 
-const Home: React.FC<IHomeProps> = ({ articles }) => {
+const Home: React.FC<IHomeProps> = ({ articles: fetchedArticles, bookNotes: fetchedBookNotes }) => {
+	const { articles, bookNotes, setArticles, setBookNotes } = useContext(ContentContext)
+
+	useEffect(() => {
+		!articles && setArticles(fetchedArticles)
+		!bookNotes && setBookNotes(fetchedBookNotes)
+	}, [])
+
 	return (
 		<Transition>
-			<Head>
-				<title>Create Next App</title>
-			</Head>
+			<Meta
+				tags="Desenvolvedor, Web, Produtividade, Blog"
+				imageAlt="Foto minha encostado em um arbusto de flores usando uma jaqueta jeans"
+				url="/"
+				title="Willians Faria"
+				image="profile_picture.jpg"
+				description="Meu nome é Willians Faria, eu sou Desenvolvedor Web, Cientista da computação, Blogger, e mais algumas coisas que estão por vir!"
+			/>
 			<Main>
 				<MainSection>
 					<Title>
@@ -41,18 +57,20 @@ const Home: React.FC<IHomeProps> = ({ articles }) => {
 				</MainSection>
 				<FinishSection>
 					<SmallTitle>Últimos artigos 📝</SmallTitle>
-					<ArticleList articles={articles} />
+					<ArticleList quantity={3} />
 				</FinishSection>
 			</Main>
 		</Transition>
 	)
 }
 
-export async function getStaticProps(): Promise<{ props: { articles: TArticle[] } }> {
-	const articles = useFetchArticles('articles', 1, 3)
+export async function getStaticProps(): Promise<{ props: { articles: TArticle[]; bookNotes: TArticle[] } }> {
+	const articles = useFetchArticles()
+	const bookNotes = useFetchBookNotes()
 	return {
 		props: {
-			articles
+			articles,
+			bookNotes
 		}
 	}
 }

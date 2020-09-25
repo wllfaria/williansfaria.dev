@@ -6,24 +6,11 @@ tags:
     - Vida
     - Produtividade
     - Trabalho
+coverImg: 000001-cover.jpg
 description: Por que eu, voce, e todas as pessoas deveriam ter seu próprio blog.
 author: Willians Faria
 slug: como-construi-meu-blog-e-porque-voce-tambem-deveria
 
 ---
 
-# Test
-## test title small
-
-post
-
-- checkbox
-[ ] test
-
-```html
-<h1>test</h1>
-```
-
-```javascript
-const test = new Date()
-```
+# Test teste testet asdopakd asopk dopaso kpodasokp

@@ -6,23 +6,48 @@ import { SArticleCard, SArticleReadTime, SArticleTitle, SArticleDesc, SArticleTa
 
 interface IArticleCardProps {
 	article: TArticle
+	isBookNote?: boolean
 }
 
-const ArticleCard: React.FC<IArticleCardProps> = ({ article }) => {
+const ArticleCard: React.FC<IArticleCardProps> = ({ article, isBookNote = false }) => {
 	return (
 		<SArticleCard>
 			<SArticleReadTime>
-				<Link href={`/blog/${article.data.slug}`}>{article.data.timeToRead}</Link>
+				<Link
+					href={isBookNote ? '/book-notes/[slug]' : '/blog/[slug]'}
+					as={isBookNote ? `/book-notes/${article.data.slug}` : `/blog/${article.data.slug}`}
+				>
+					{article.data.timeToRead}
+				</Link>
 			</SArticleReadTime>
 			<SArticleTitle>
-				<Link href={`/blog/${article.data.slug}`}>{article.data.title}</Link>
+				<Link
+					href={isBookNote ? '/book-notes/[slug]' : '/blog/[slug]'}
+					as={isBookNote ? `/book-notes/${article.data.slug}` : `/blog/${article.data.slug}`}
+				>
+					{article.data.title}
+				</Link>
 			</SArticleTitle>
 			<SArticleDesc>
-				<Link href={`/blog/${article.data.slug}`}>{article.data.description}</Link>
+				<Link
+					href={isBookNote ? '/book-notes/[slug]' : '/blog/[slug]'}
+					as={isBookNote ? `/book-notes/${article.data.slug}` : `/blog/${article.data.slug}`}
+				>
+					{article.data.description}
+				</Link>
 			</SArticleDesc>
 			<SArticleTag>
-				<Link href={`/blog/${article.data.slug}`}>
+				<Link
+					href={isBookNote ? '/book-notes/[slug]' : '/blog/[slug]'}
+					as={isBookNote ? `/book-notes/${article.data.slug}` : `/blog/${article.data.slug}`}
+				>
 					{article.data.tags.map(tag => (tag = ' ' + tag)).join()}
+				</Link>
+				<Link
+					href={isBookNote ? '/book-notes/[slug]' : '/blog/[slug]'}
+					as={isBookNote ? `/book-notes/${article.data.slug}` : `/blog/${article.data.slug}`}
+				>
+					{article.data.date}
 				</Link>
 			</SArticleTag>
 		</SArticleCard>

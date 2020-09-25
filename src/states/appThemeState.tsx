@@ -1,4 +1,4 @@
-import React, { createContext, useReducer } from 'react'
+import React, { createContext, useEffect, useReducer } from 'react'
 import { ThemeProvider, DefaultTheme } from 'styled-components'
 import { GlobalStyles, FontStyles, DarkTheme, LightTheme } from '../styles'
 
@@ -41,6 +41,13 @@ const reducer = (state: IAppThemeState, action: TAppThemeActions) => {
 const AppThemeState: React.FC = ({ children }) => {
 	const [state, dispatch] = useReducer(reducer, initialState)
 
+	useEffect(() => {
+		const savedTheme = window.localStorage.getItem('wllfariatheme')
+		if (!savedTheme) return
+		const themeParsed = JSON.parse(savedTheme)
+		state.theme.title !== themeParsed && toggleTheme()
+	}, [])
+
 	const toggleTheme = () => {
 		const darkModeAction: TAppThemeActions = {
 			type: 'SHOW_DARK_MODE',
@@ -50,6 +57,7 @@ const AppThemeState: React.FC = ({ children }) => {
 			type: 'SHOW_LIGHT_MODE',
 			payload: LightTheme
 		}
+		window.localStorage.setItem('wllfariatheme', JSON.stringify(state.theme.title === 'Dark' ? 'Light' : 'Dark'))
 		dispatch(state.theme.title === 'Light' ? darkModeAction : lightModeAction)
 	}
 
