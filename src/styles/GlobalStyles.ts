@@ -28,6 +28,7 @@ export default createGlobalStyle`
 	textarea,
 	input {
 		font-family: 'Regular';
+		line-height: 1.7555555555555556;
 		-moz-osx-font-smoothing: grayscale;
 		-webkit-font-smoothing: antialiased;
 		-moz-font-smoothing: antialiased;

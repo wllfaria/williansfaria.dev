@@ -1,4 +1,4 @@
-import { DefaultTheme } from '.'
+import { DefaultTheme } from 'styled-components'
 type ExcludedProps = 'text' | 'background'
 
 type PartialTheme<T> = {
@@ -32,12 +32,13 @@ const fixedStyles: PartialTheme<DefaultTheme> = {
 	fontSizes: {
 		1: '5.4rem',
 		2: '3.6rem',
-		3: '2.4rem',
-		4: '1.8rem',
-		5: '1.4rem',
-		6: '1.2rem',
-		7: '1.1rem',
-		8: '1rem'
+		3: '2.8rem',
+		4: '2.4rem',
+		5: '1.8rem',
+		6: '1.4rem',
+		7: '1.2rem',
+		8: '1.1rem',
+		9: '1rem'
 	},
 
 	margins: {
@@ -83,10 +84,10 @@ const fixedStyles: PartialTheme<DefaultTheme> = {
 	},
 
 	breakpoints: {
-		sm: '576px',
+		sm: '450px',
 		md: '768px',
-		lg: '992px',
-		xl: '1200px'
+		lg: '1150px',
+		xl: '1440px'
 	}
 }
 
