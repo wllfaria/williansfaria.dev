@@ -31,12 +31,12 @@ const BookNote: React.FC<IBookNoteProps> = ({ bookNotes: fetchedBookNotes }) => 
 	return (
 		<Transition>
 			<Meta
-				tags={shownBookNote.data.tags.map(tag => (tag = ' ' + tag)).join()}
-				imageAlt={shownBookNote.data.coverImgAlt}
-				url={`/book-notes/${shownBookNote.data.slug}`}
-				title={shownBookNote.data.title}
-				image={`/content/${shownBookNote.data.coverImg}`}
-				description={shownBookNote.data.description}
+				tags={shownBookNote?.data.tags.map(tag => (tag = ' ' + tag)).join()}
+				imageAlt={shownBookNote?.data.coverImgAlt}
+				url={`/book-notes/${shownBookNote?.data.slug}`}
+				title={shownBookNote?.data.title}
+				image={`/content/${shownBookNote?.data.coverImg}`}
+				description={shownBookNote?.data.description}
 			/>
 			<Main>
 				<SArticleCover src={shownBookNote && `/static/assets/images/content/${shownBookNote.data.coverImg}`} />

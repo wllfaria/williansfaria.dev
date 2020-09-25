@@ -31,12 +31,12 @@ const Article: React.FC<IArticleProps> = ({ articles: fetchedArticles }) => {
 	return (
 		<Transition>
 			<Meta
-				tags={article.data.tags.map(tag => (tag = ' ' + tag)).join()}
-				imageAlt={article.data.coverImgAlt}
-				url={`/blog/${article.data.slug}`}
-				title={article.data.title}
-				image={`/content/${article.data.coverImg}`}
-				description={article.data.description}
+				tags={article?.data.tags.map(tag => (tag = ' ' + tag)).join()}
+				imageAlt={article?.data.coverImgAlt}
+				url={`/blog/${article?.data.slug}`}
+				title={article?.data.title}
+				image={`/content/${article?.data.coverImg}`}
+				description={article?.data.description}
 			/>
 			<Main>
 				<SArticleCover src={article && `/static/assets/images/content/${article.data.coverImg}`} />
