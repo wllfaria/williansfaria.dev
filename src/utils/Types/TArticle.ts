@@ -3,6 +3,7 @@ export type TArticle = {
 		title: string
 		tags: string[]
 		coverImg: string
+		coverImgAlt: string
 		description: string
 		author: string
 		timeToRead: string

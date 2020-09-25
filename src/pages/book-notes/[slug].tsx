@@ -8,6 +8,7 @@ import { ContentContext } from '../../states/contentState'
 import { TArticle } from '../../utils'
 import { Main, MainSection, SArticleCover, SArticle } from '../../styles'
 import CodeBlock from '../../components/CodeBlock'
+import Meta from '../../components/Meta'
 
 interface IBookNoteProps {
 	bookNotes: TArticle[]
@@ -29,6 +30,14 @@ const BookNote: React.FC<IBookNoteProps> = ({ bookNotes: fetchedBookNotes }) => 
 
 	return (
 		<Transition>
+			<Meta
+				tags={shownBookNote.data.tags.map(tag => (tag = ' ' + tag)).join()}
+				imageAlt={shownBookNote.data.coverImgAlt}
+				url={`/book-notes/${shownBookNote.data.slug}`}
+				title={shownBookNote.data.title}
+				image={`/content/${shownBookNote.data.coverImg}`}
+				description={shownBookNote.data.description}
+			/>
 			<Main>
 				<SArticleCover src={shownBookNote && `/static/assets/images/content/${shownBookNote.data.coverImg}`} />
 				<MainSection>
