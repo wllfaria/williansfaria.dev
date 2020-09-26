@@ -1,6 +1,4 @@
-/* eslint-disable react/jsx-no-undef */
-import { useRouter } from 'next/router'
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect } from 'react'
 import ReactMarkdown from 'react-markdown'
 import Transition from '../../components/Transition'
 import { useFetchBookNotes } from '../../hooks'
@@ -12,39 +10,33 @@ import Meta from '../../components/Meta'
 
 interface IBookNoteProps {
 	bookNotes: TArticle[]
+	bookNote: TArticle
 }
 
-const BookNote: React.FC<IBookNoteProps> = ({ bookNotes: fetchedBookNotes }) => {
-	const { asPath } = useRouter()
-	const [shownBookNote, setBookNote] = useState<TArticle>(null)
+const BookNote: React.FC<IBookNoteProps> = ({ bookNotes: fetchedBookNotes, bookNote }) => {
 	const { bookNotes, setBookNotes } = useContext(ContentContext)
 
 	useEffect(() => {
 		!bookNotes && setBookNotes(fetchedBookNotes)
 	}, [])
 
-	useEffect(() => {
-		const bookNote = bookNotes?.filter(article => asPath.includes(article.data.slug))[0]
-		bookNote && setBookNote(bookNote)
-	}, [bookNotes])
-
 	return (
 		<Transition>
 			<Meta
-				tags={shownBookNote?.data.tags.map(tag => (tag = ' ' + tag)).join()}
-				imageAlt={shownBookNote?.data.coverImgAlt}
-				url={`/book-notes/${shownBookNote?.data.slug}`}
-				title={shownBookNote?.data.title}
-				image={`/content/${shownBookNote?.data.coverImg}`}
-				description={shownBookNote?.data.description}
+				tags={bookNote.data.tags.map(tag => (tag = ' ' + tag)).join()}
+				imageAlt={bookNote.data.coverImgAlt}
+				url={`/book-notes/${bookNote.data.slug}`}
+				title={bookNote.data.title}
+				image={`/content/${bookNote.data.coverImg}`}
+				description={bookNote.data.description}
 			/>
 			<Main>
-				<SArticleCover src={shownBookNote && `/static/assets/images/content/${shownBookNote.data.coverImg}`} />
+				<SArticleCover src={bookNote && `/static/assets/images/content/${bookNote.data.coverImg}`} />
 				<MainSection>
 					<SArticle>
 						<ReactMarkdown
 							escapeHtml={true}
-							source={shownBookNote?.content}
+							source={bookNote.content}
 							renderers={{
 								code: CodeBlock
 							}}
@@ -69,11 +61,15 @@ export async function getStaticPaths(): Promise<{ paths: { params: { slug: strin
 	}
 }
 
-export async function getStaticProps(): Promise<{ props: { bookNotes: TArticle[] } }> {
+export async function getStaticProps(context: {
+	params: { slug: string }
+}): Promise<{ props: { bookNotes: TArticle[]; bookNote: TArticle } }> {
 	const bookNotes = useFetchBookNotes()
+	const bookNote = bookNotes.filter(bookNote => bookNote.data.slug === context.params.slug)[0]
 	return {
 		props: {
-			bookNotes
+			bookNotes,
+			bookNote
 		}
 	}
 }

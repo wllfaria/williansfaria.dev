@@ -1,6 +1,4 @@
-/* eslint-disable react/jsx-no-undef */
-import { useRouter } from 'next/router'
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect } from 'react'
 import ReactMarkdown from 'react-markdown'
 import Transition from '../../components/Transition'
 import { useFetchArticles } from '../../hooks'
@@ -12,39 +10,33 @@ import Meta from '../../components/Meta'
 
 interface IArticleProps {
 	articles: TArticle[]
+	article: TArticle
 }
 
-const Article: React.FC<IArticleProps> = ({ articles: fetchedArticles }) => {
-	const { asPath } = useRouter()
-	const [article, setArticle] = useState<TArticle>(null)
+const Article: React.FC<IArticleProps> = ({ articles: fetchedArticles, article }) => {
 	const { articles, setArticles } = useContext(ContentContext)
 
 	useEffect(() => {
-		!articles && setArticles(fetchedArticles)
-	}, [])
-
-	useEffect(() => {
-		const article = articles?.filter(article => asPath.includes(article.data.slug))[0]
-		article && setArticle(article)
-	}, [articles])
+		!articles && setArticles(articles)
+	}, [fetchedArticles])
 
 	return (
 		<Transition>
 			<Meta
-				tags={article?.data.tags.map(tag => (tag = ' ' + tag)).join()}
-				imageAlt={article?.data.coverImgAlt}
-				url={`/blog/${article?.data.slug}`}
-				title={article?.data.title}
-				image={`/content/${article?.data.coverImg}`}
-				description={article?.data.description}
+				tags={article.data.tags.map(tag => (tag = ' ' + tag)).join()}
+				imageAlt={article.data.coverImgAlt}
+				url={`/blog/${article.data.slug}`}
+				title={article.data.title}
+				image={`content/${article.data.coverImg}`}
+				description={article.data.description}
 			/>
 			<Main>
-				<SArticleCover src={article && `/static/assets/images/content/${article.data.coverImg}`} />
+				<SArticleCover src={`/static/assets/images/content/${article.data.coverImg}`} />
 				<MainSection>
 					<SArticle>
 						<ReactMarkdown
 							escapeHtml={true}
-							source={article?.content}
+							source={article.content}
 							renderers={{
 								code: CodeBlock
 							}}
@@ -69,11 +61,15 @@ export async function getStaticPaths(): Promise<{ paths: { params: { slug: strin
 	}
 }
 
-export async function getStaticProps(): Promise<{ props: { articles: TArticle[] } }> {
+export async function getStaticProps(context: {
+	params: { slug: string }
+}): Promise<{ props: { articles: TArticle[]; article: TArticle } }> {
 	const articles = useFetchArticles()
+	const article = articles.filter(article => article.data.slug === context.params.slug)[0]
 	return {
 		props: {
-			articles
+			articles,
+			article
 		}
 	}
 }
