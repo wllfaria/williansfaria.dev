@@ -9,6 +9,7 @@ import { Main, MainSection, SArticleCover, SArticle } from '../../styles'
 import Transition from '../../components/Transition'
 import CodeBlock from '../../components/CodeBlock'
 import Meta from '../../components/Meta'
+import ReadProgress from '../../components/ReadProgress'
 
 interface IBookNoteProps {
 	content: TArticle
@@ -26,6 +27,7 @@ const BookNote: React.FC<IBookNoteProps> = ({ content }) => {
 				description={content.data.description}
 			/>
 			<Main>
+				<ReadProgress />
 				<SArticleCover src={`/static/assets/images/content/${content.data.coverImg}`} />
 				<MainSection>
 					<SArticle>

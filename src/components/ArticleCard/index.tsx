@@ -30,8 +30,8 @@ const ArticleCard: React.FC<IArticleCardProps> = ({ article, isBookNote = false 
 					<SArticleTitle>{article.data.title}</SArticleTitle>
 					<SArticleDesc>{article.data.description}</SArticleDesc>
 					<SArticleTag>
-						{article.data.tags.map(tag => (tag = ' ' + tag)).join()}
-						{article.data.date}
+						<span>{article.data.tags.map(tag => (tag = ' ' + tag)).join()}</span>
+						<span>{article.data.date}</span>
 					</SArticleTag>
 				</SArticleCard>
 			</Link>

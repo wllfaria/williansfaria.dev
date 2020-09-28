@@ -55,6 +55,10 @@ export const Paragraph = styled.p`
 	font-size: ${props => props.theme.fontSizes[5]};
 	line-height: 1.655556;
 	margin-bottom: ${props => props.theme.margins[2]};
+
+	@media (min-width: ${props => props.theme.breakpoints.lg}) {
+		line-height: 1.8;
+	}
 `
 
 export const MutedParagraph = styled.p`
