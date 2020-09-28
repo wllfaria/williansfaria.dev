@@ -1,42 +1,37 @@
-import React, { useContext, useEffect } from 'react'
+import React from 'react'
+import { GetStaticPaths, GetStaticProps } from 'next'
 import ReactMarkdown from 'react-markdown'
-import Transition from '../../components/Transition'
-import { useFetchBookNotes } from '../../hooks'
-import { ContentContext } from '../../states/contentState'
-import { TArticle } from '../../utils'
+
+import { useFetchContent } from '../../hooks'
+import { TArticle, TStaticPathsResult, TStaticPropsContext, TStaticPropsResult } from '../../utils'
+
 import { Main, MainSection, SArticleCover, SArticle } from '../../styles'
+import Transition from '../../components/Transition'
 import CodeBlock from '../../components/CodeBlock'
 import Meta from '../../components/Meta'
 
 interface IBookNoteProps {
-	bookNotes: TArticle[]
-	bookNote: TArticle
+	content: TArticle
 }
 
-const BookNote: React.FC<IBookNoteProps> = ({ bookNotes: fetchedBookNotes, bookNote }) => {
-	const { bookNotes, setBookNotes } = useContext(ContentContext)
-
-	useEffect(() => {
-		!bookNotes && setBookNotes(fetchedBookNotes)
-	}, [])
-
+const BookNote: React.FC<IBookNoteProps> = ({ content }) => {
 	return (
 		<Transition>
 			<Meta
-				tags={bookNote.data.tags.map(tag => (tag = ' ' + tag)).join()}
-				imageAlt={bookNote.data.coverImgAlt}
-				url={`/book-notes/${bookNote.data.slug}`}
-				title={bookNote.data.title}
-				image={`/content/${bookNote.data.coverImg}`}
-				description={bookNote.data.description}
+				tags={content.data.tags.map(tag => (tag = ' ' + tag)).join()}
+				imageAlt={content.data.coverImgAlt}
+				url={`/book-notes/${content.data.slug}`}
+				title={content.data.title}
+				image={`/content/${content.data.coverImg}`}
+				description={content.data.description}
 			/>
 			<Main>
-				<SArticleCover src={bookNote && `/static/assets/images/content/${bookNote.data.coverImg}`} />
+				<SArticleCover src={`/static/assets/images/content/${content.data.coverImg}`} />
 				<MainSection>
 					<SArticle>
 						<ReactMarkdown
 							escapeHtml={true}
-							source={bookNote.content}
+							source={content.content}
 							renderers={{
 								code: CodeBlock
 							}}
@@ -48,10 +43,10 @@ const BookNote: React.FC<IBookNoteProps> = ({ bookNotes: fetchedBookNotes, bookN
 	)
 }
 
-export async function getStaticPaths(): Promise<{ paths: { params: { slug: string } }[]; fallback: boolean }> {
-	const bookNotes = useFetchBookNotes()
+export const getStaticPaths: GetStaticPaths<TStaticPathsResult> = async () => {
+	const content = useFetchContent('book-notes')
 
-	const paths = bookNotes.map(bookNote => ({
+	const paths = content.map(bookNote => ({
 		params: { slug: bookNote.data.slug }
 	}))
 
@@ -61,15 +56,12 @@ export async function getStaticPaths(): Promise<{ paths: { params: { slug: strin
 	}
 }
 
-export async function getStaticProps(context: {
-	params: { slug: string }
-}): Promise<{ props: { bookNotes: TArticle[]; bookNote: TArticle } }> {
-	const bookNotes = useFetchBookNotes()
-	const bookNote = bookNotes.filter(bookNote => bookNote.data.slug === context.params.slug)[0]
+export const getStaticProps: GetStaticProps<TStaticPropsResult, TStaticPropsContext> = async context => {
+	const content = useFetchContent()
+	const bookNote = content.filter(bookNote => bookNote.data.slug === context.params.slug)[0]
 	return {
 		props: {
-			bookNotes,
-			bookNote
+			content: bookNote
 		}
 	}
 }

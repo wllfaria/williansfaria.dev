@@ -1,24 +1,29 @@
-import React, { useEffect, useContext } from 'react'
+import React from 'react'
+import { GetStaticProps } from 'next'
+
+import { useFetchContent } from '../../hooks'
+import { TArticle, TStaticPropsContext, TStaticPropsResult } from '../../utils'
+
+import { Main, MainSection } from '../../styles'
 import ArticleList from '../../components/ArticleList'
 import Meta from '../../components/Meta'
 import Transition from '../../components/Transition'
-import { useFetchArticles, useFetchBookNotes } from '../../hooks'
-import { ContentContext } from '../../states/contentState'
-import { Main, MainSection } from '../../styles'
-import { TArticle } from '../../utils'
+import Search from '../../components/Search'
 
 interface IBlogProps {
-	articles: TArticle[]
-	bookNotes: TArticle[]
+	content: TArticle[]
 }
 
-const Blog: React.FC<IBlogProps> = ({ articles: fetchedArticles, bookNotes: fetchedBookNotes }) => {
-	const { articles, bookNotes, setArticles, setBookNotes } = useContext(ContentContext)
+const Blog: React.FC<IBlogProps> = ({ content }) => {
+	const searchConfig = {
+		appId: process.env.ALGOLIA_APP_ID,
+		searchOnlyApiKey: process.env.ALGOLIA_SEARCH_KEY,
+		indexName: process.env.ALGOLIA_INDEX_NAME
+	}
 
-	useEffect(() => {
-		!articles && setArticles(fetchedArticles)
-		!bookNotes && setBookNotes(fetchedBookNotes)
-	}, [])
+	const blogContent = () => {
+		return <ArticleList content={content} fetchOnScroll />
+	}
 
 	return (
 		<Transition>
@@ -32,20 +37,23 @@ const Blog: React.FC<IBlogProps> = ({ articles: fetchedArticles, bookNotes: fetc
 			/>
 			<Main>
 				<MainSection>
-					<ArticleList fetchOnScroll />
+					<Search
+						appId={searchConfig.appId}
+						indexName={searchConfig.indexName}
+						searchOnlyApiKey={searchConfig.searchOnlyApiKey}
+						callback={blogContent()}
+					/>
 				</MainSection>
 			</Main>
 		</Transition>
 	)
 }
 
-export async function getStaticProps(): Promise<{ props: { articles: TArticle[]; bookNotes: TArticle[] } }> {
-	const articles = useFetchArticles()
-	const bookNotes = useFetchBookNotes()
+export const getStaticProps: GetStaticProps<TStaticPropsResult, TStaticPropsContext> = async () => {
+	const articles = useFetchContent()
 	return {
 		props: {
-			articles,
-			bookNotes
+			content: articles
 		}
 	}
 }

@@ -1,42 +1,37 @@
-import React, { useContext, useEffect } from 'react'
+import React from 'react'
+import { GetStaticPaths, GetStaticProps } from 'next'
 import ReactMarkdown from 'react-markdown'
-import Transition from '../../components/Transition'
-import { useFetchArticles } from '../../hooks'
-import { ContentContext } from '../../states/contentState'
-import { TArticle } from '../../utils'
+
+import { TArticle, TStaticPathsResult, TStaticPropsContext, TStaticPropsResult } from '../../utils'
+import { useFetchContent } from '../../hooks'
+
 import { Main, MainSection, SArticleCover, SArticle } from '../../styles'
+import Transition from '../../components/Transition'
 import CodeBlock from '../../components/CodeBlock'
 import Meta from '../../components/Meta'
 
 interface IArticleProps {
-	articles: TArticle[]
-	article: TArticle
+	content: TArticle
 }
 
-const Article: React.FC<IArticleProps> = ({ articles: fetchedArticles, article }) => {
-	const { articles, setArticles } = useContext(ContentContext)
-
-	useEffect(() => {
-		!articles && setArticles(articles)
-	}, [fetchedArticles])
-
+const Article: React.FC<IArticleProps> = ({ content }) => {
 	return (
 		<Transition>
 			<Meta
-				tags={article.data.tags.map(tag => (tag = ' ' + tag)).join()}
-				imageAlt={article.data.coverImgAlt}
-				url={`/blog/${article.data.slug}`}
-				title={article.data.title}
-				image={`content/${article.data.coverImg}`}
-				description={article.data.description}
+				tags={content.data.tags.map(tag => (tag = ' ' + tag)).join()}
+				imageAlt={content.data.coverImgAlt}
+				url={`/blog/${content.data.slug}`}
+				title={content.data.title}
+				image={`content/${content.data.coverImg}`}
+				description={content.data.description}
 			/>
 			<Main>
-				<SArticleCover src={`/static/assets/images/content/${article.data.coverImg}`} />
+				<SArticleCover src={`/static/assets/images/content/${content.data.coverImg}`} />
 				<MainSection>
 					<SArticle>
 						<ReactMarkdown
 							escapeHtml={true}
-							source={article.content}
+							source={content.content}
 							renderers={{
 								code: CodeBlock
 							}}
@@ -48,8 +43,8 @@ const Article: React.FC<IArticleProps> = ({ articles: fetchedArticles, article }
 	)
 }
 
-export async function getStaticPaths(): Promise<{ paths: { params: { slug: string } }[]; fallback: boolean }> {
-	const articles = useFetchArticles()
+export const getStaticPaths: GetStaticPaths<TStaticPathsResult> = async () => {
+	const articles = useFetchContent()
 
 	const paths = articles.map(article => ({
 		params: { slug: article.data.slug }
@@ -61,15 +56,12 @@ export async function getStaticPaths(): Promise<{ paths: { params: { slug: strin
 	}
 }
 
-export async function getStaticProps(context: {
-	params: { slug: string }
-}): Promise<{ props: { articles: TArticle[]; article: TArticle } }> {
-	const articles = useFetchArticles()
-	const article = articles.filter(article => article.data.slug === context.params.slug)[0]
+export const getStaticProps: GetStaticProps<TStaticPropsResult, TStaticPropsContext> = async context => {
+	const content = useFetchContent()
+	const article = content.filter(article => article.data.slug === context.params.slug)[0]
 	return {
 		props: {
-			articles,
-			article
+			content: article
 		}
 	}
 }

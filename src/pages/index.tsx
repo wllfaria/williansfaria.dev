@@ -1,28 +1,20 @@
-import React, { useContext, useEffect } from 'react'
-import Head from 'next/head'
+import React from 'react'
+import { GetStaticProps } from 'next'
 import { motion } from 'framer-motion'
+
+import { TArticle, TStaticPropsContext, TStaticPropsResult } from '../utils'
+import { useFetchContent } from '../hooks'
+
 import { MutedParagraph, Paragraph, PurpleText, SmallTitle, Title, Main, MainSection, FinishSection } from '../styles'
-import { useFetchArticles } from '../hooks/useFetchArticles'
-import { TArticle } from '../utils'
 import ArticleList from '../components/ArticleList'
 import Transition from '../components/Transition'
-import { useFetchBookNotes } from '../hooks/useFetchBookNotes'
-import { ContentContext } from '../states/contentState'
 import Meta from '../components/Meta'
 
 interface IHomeProps {
-	articles: TArticle[]
-	bookNotes: TArticle[]
+	content: TArticle[]
 }
 
-const Home: React.FC<IHomeProps> = ({ articles: fetchedArticles, bookNotes: fetchedBookNotes }) => {
-	const { articles, bookNotes, setArticles, setBookNotes } = useContext(ContentContext)
-
-	useEffect(() => {
-		!articles && setArticles(fetchedArticles)
-		!bookNotes && setBookNotes(fetchedBookNotes)
-	}, [])
-
+const Home: React.FC<IHomeProps> = ({ content }) => {
 	return (
 		<Transition>
 			<Meta
@@ -57,20 +49,18 @@ const Home: React.FC<IHomeProps> = ({ articles: fetchedArticles, bookNotes: fetc
 				</MainSection>
 				<FinishSection>
 					<SmallTitle>Últimos artigos 📝</SmallTitle>
-					<ArticleList quantity={3} />
+					<ArticleList content={content} quantity={3} />
 				</FinishSection>
 			</Main>
 		</Transition>
 	)
 }
 
-export async function getStaticProps(): Promise<{ props: { articles: TArticle[]; bookNotes: TArticle[] } }> {
-	const articles = useFetchArticles()
-	const bookNotes = useFetchBookNotes()
+export const getStaticProps: GetStaticProps<TStaticPropsResult, TStaticPropsContext> = async () => {
+	const articles = useFetchContent()
 	return {
 		props: {
-			articles,
-			bookNotes
+			content: articles
 		}
 	}
 }

@@ -101,7 +101,7 @@ export const SArticle = styled.div`
 
 	& h1 {
 		font-size: ${props => props.theme.fontSizes[4]};
-		margin-bottom: 2rem;
+		margin-bottom: ${props => props.theme.margins[2]};
 
 		@media (min-width: ${props => props.theme.breakpoints.lg}) {
 			font-size: ${props => props.theme.fontSizes[3]};
@@ -123,7 +123,7 @@ export const SArticle = styled.div`
 	& h6 {
 		font-size: 1.6rem;
 		color: ${props => props.theme.colors.text[300]};
-		margin-bottom: 1rem;
+		margin-bottom: ${props => props.theme.margins[1]};
 
 		@media (min-width: ${props => props.theme.breakpoints.lg}) {
 			font-size: ${props => props.theme.fontSizes[5]};
@@ -132,17 +132,17 @@ export const SArticle = styled.div`
 
 	& img {
 		width: 100%;
-		margin-bottom: 2rem;
+		margin-bottom: ${props => props.theme.margins[2]};
 	}
 
 	& blockquote {
-		padding-left: 1rem;
-		padding-top: 1rem;
-		padding-bottom: 1rem;
+		padding-left: ${props => props.theme.paddings[1]};
+		padding-top: ${props => props.theme.paddings[1]};
+		padding-bottom: ${props => props.theme.paddings[1]};
 		border-left: 3px solid ${props => props.theme.colors.text[100]};
 		font-size: ${props => props.theme.fontSizes[5]};
 		color: ${props => props.theme.colors.text[300]};
-		margin-bottom: 2rem;
+		margin-bottom: ${props => props.theme.margins[2]};
 		font-family: 'Regular';
 
 		@media (min-width: ${props => props.theme.breakpoints.lg}) {
@@ -157,7 +157,7 @@ export const SArticle = styled.div`
 	& p {
 		font-size: 1.6rem;
 		line-height: 1.655556;
-		margin-bottom: 1rem;
+		margin-bottom: ${props => props.theme.margins[1]};
 
 		@media (min-width: ${props => props.theme.breakpoints.lg}) {
 			font-size: ${props => props.theme.fontSizes[5]};
@@ -170,7 +170,7 @@ export const SArticle = styled.div`
 			color: ${props => props.theme.colors.text[300]};
 		}
 		padding-left: 1.6rem;
-		margin-bottom: 1rem;
+		margin-bottom: ${props => props.theme.margins[1]};
 
 		li {
 			font-size: 1.6rem;
@@ -184,7 +184,7 @@ export const SArticle = styled.div`
 
 	& table {
 		width: 100%;
-		margin-bottom: 2rem;
+		margin-bottom: ${props => props.theme.margins[2]};
 		border-collapse: collapse;
 
 		& thead {

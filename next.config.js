@@ -1,8 +1,8 @@
 module.exports = {
-	target: 'serverless',
-	webpack: function (config) {
-		config.module.rules.push({test:  /\.md$/, use: 'raw-loader'})
-		config.module.rules.push({test: /\.yml$/, use: 'raw-loader'})
-		return config
-	}
+	env: {
+		ALGOLIA_APP_ID: 'E37GGRXN6U',
+		ALGOLIA_SEARCH_KEY: '8bec71936885412ea3cc0615c88985f8',
+		ALGOLIA_INDEX_NAME: 'prod_BLOG',
+		GOOGLE_ANALYTICS_ID: 'UA-179149000-1'
+	},
 }
