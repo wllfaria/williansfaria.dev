@@ -55,5 +55,9 @@ export default createGlobalStyle`
 		-webkit-font-smoothing: antialiased;
 		-moz-font-smoothing: antialiased;
 		text-rendering: optimizelegibility;
+
+		@media (min-width: ${props => props.theme.breakpoints.lg}) {
+			line-height: 2;
+		}
 	}
 `

@@ -115,6 +115,7 @@ export const SArticle = styled.div`
 	& h2 {
 		font-size: ${props => props.theme.fontSizes[5]};
 		margin-bottom: 1.5rem;
+		margin-top: 2rem;
 
 		@media (min-width: ${props => props.theme.breakpoints.lg}) {
 			font-size: ${props => props.theme.fontSizes[4]};
@@ -137,6 +138,7 @@ export const SArticle = styled.div`
 	& img {
 		width: 100%;
 		margin-bottom: ${props => props.theme.margins[2]};
+		margin-top: ${props => props.theme.margins[2]};
 	}
 
 	& blockquote {
@@ -146,6 +148,8 @@ export const SArticle = styled.div`
 		border-left: 3px solid ${props => props.theme.colors.text[100]};
 		font-size: ${props => props.theme.fontSizes[5]};
 		color: ${props => props.theme.colors.text[300]};
+		margin-top: ${props => props.theme.margins[2]};
+		font-style: italic;
 		margin-bottom: ${props => props.theme.margins[2]};
 		font-family: 'Regular';
 
@@ -160,8 +164,8 @@ export const SArticle = styled.div`
 
 	& p {
 		font-size: 1.6rem;
-		line-height: 1.655556;
-		margin-bottom: ${props => props.theme.margins[1]};
+		line-height: 1.9;
+		margin-bottom: ${props => props.theme.margins[2]};
 
 		@media (min-width: ${props => props.theme.breakpoints.lg}) {
 			font-size: ${props => props.theme.fontSizes[5]};
